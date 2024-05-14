@@ -4,9 +4,9 @@ https://api.flutter.dev/flutter/material/MaterialApp-class.html
 ***************************************************************************************************************
 Vocab: 
 
-stateless: immutable, properties dont change over time
+stateless widget: immutable, properties cant change over time
 
-stateful: updates when data changes
+stateful widget: the state of the widget can change over time
 
 extends (inheritance) : used to create a class that inherits properties and behaviors from another class,
 reffered to as superclass. When a class textends another class, it gains access to all the variable, methods,
@@ -38,46 +38,37 @@ void perimeterOfRectangle(int length, int breadth) =>
 Key? key notation https://stackoverflow.com/questions/64560461/the-parameter-cant-have-a-value-of-null-because-of-its-type-in-dart
 (If you want to have a nullable parameter)
 
+stless (new stateless widget class)
 
 
 
 ************************************************************************************************************ */ 
 
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp();
-  
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp( 
-      home: const MyHomePage(),
-    );
-  }
-}
+void main() => runApp(MaterialApp( 
+  home: MyHomePage(),
+  )); // root of the widget tree: MyApp, this begins the whole process of running
 
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
 
+class MyHomePage extends StatelessWidget { // extending staeless widget class in flutter
   @override
   Widget build(BuildContext context) {
      // beginning to build the scaffold (top level container), wrapper to layer widgets like buttons and body text
     return Scaffold ( 
       appBar: AppBar (
-        title: Text(
+        title: const Text(
           "Current Location",
           style: TextStyle(
             color: Colors.black,
-            fontSize: 25, 
-            fontWeight: FontWeight.w500 // boldness
+            fontSize: 30, 
+            fontWeight: FontWeight.w500, // boldness
+            fontFamily: 'Gloock'
           ),
         ),
         centerTitle: true,
-        backgroundColor: Color.fromARGB(209, 210, 210, 210),
+        backgroundColor: Color.fromARGB(209, 139, 139, 139),
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(50.0),
