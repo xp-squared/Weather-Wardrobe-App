@@ -40,7 +40,15 @@ Key? key notation https://stackoverflow.com/questions/64560461/the-parameter-can
 
 stless (new stateless widget class)
 
+@override, for build function it will override the one defined in the classes ancestor, the thing we extend from, statelesswidget,
+so we just use our own build in general.
 
+example code for images I had 
+body: Center(
+        child: Image(
+          image: AssetImage('assets/weather-icons-set/CLOUDS/png clouds/001lighticons-01.png'),
+        ),
+      ),
 
 ************************************************************************************************************ */ 
 
@@ -54,9 +62,10 @@ void main() => runApp(MaterialApp(
 
 class MyHomePage extends StatelessWidget { // extending staeless widget class in flutter
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // this build function builds up the widget tree
      // beginning to build the scaffold (top level container), wrapper to layer widgets like buttons and body text
     return Scaffold ( 
+
       appBar: AppBar (
         title: const Text(
           "Current Location",
@@ -67,17 +76,24 @@ class MyHomePage extends StatelessWidget { // extending staeless widget class in
             fontFamily: 'Gloock'
           ),
         ),
-        centerTitle: true,
         backgroundColor: Color.fromARGB(209, 139, 139, 139),
-        elevation: 0,
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50.0),
+          preferredSize: const Size.fromHeight(30.0),
         child: Container(
           height: 3.0, // thickness of black line
           color: Colors.black.withOpacity(.5), // opacity of the thin black line
+          ),
+          ),
         ),
+      body: Container(
+        padding: EdgeInsets.fromLTRB(5, 5, 5, 5), // left top right bottom
+        margin: EdgeInsets.all(50),
+        color: Colors.red[400],
+        child: Image(
+          image: AssetImage('assets/weather-icons-set/CLOUDS/png clouds/001lighticons-01.png'),
         ),
-      ),
+      )
     );
+    // end of return statement always put semicolon!
   }
 }
