@@ -65,9 +65,27 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold (  // beginning to build the scaffold (top level container)
+     // beginning to build the scaffold (top level container), wrapper to layer widgets like buttons and body text
+    return Scaffold ( 
       appBar: AppBar (
-        title: const Text('Weather Area'),
+        title: Text(
+          "Current Location",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 25, 
+            fontWeight: FontWeight.w500 // boldness
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(209, 210, 210, 210),
+        elevation: 0,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(50.0),
+        child: Container(
+          height: 3.0, // thickness of black line
+          color: Colors.black.withOpacity(.5), // opacity of the thin black line
+        ),
+        ),
       ),
     );
   }
