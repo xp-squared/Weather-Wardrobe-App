@@ -74,10 +74,10 @@ class _MyHomePageState extends State<MyHomePage> {
       type: MaterialType.transparency,
       child: Stack( // stack allows for overlapping of widgets, useful when using background image and placing things over it
         children: <Widget>[
-           Container(
+          Container(
           decoration:  BoxDecoration(
             image:  DecorationImage(
-              image:  AssetImage('assets/Background1.jpg'),
+              image:  AssetImage('assets/Background3.png'),
               fit: BoxFit.fill,
             ),
             ),
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
             child: Column(
               children: <Widget> [
-                SizedBox(height: 90),
+                SizedBox(height: 100),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
@@ -105,8 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           ..style = PaintingStyle.stroke
                           ..strokeWidth = 6
                           ..color = Colors.black,
-                      )
-                    ),
+                          )
+                        ),
                     // this is the inside text
                     Text(
                       'Current Location',
@@ -114,14 +114,137 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontFamily: 'Gloock',
                         fontSize: 40,
                         color: Colors.grey[300],
-                          ),
+                              ),
+                            ),
+                          ]
                         ),
-                      ]
+                  ]
+                ),
+                const SizedBox(height: 0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget> [
+                    Stack(
+                      children: <Widget> [
+                    // this text is the border
+                     Text(
+                      'Date and Time',
+                      style: TextStyle(
+                        fontFamily: 'Gloock',
+                        fontSize: 25,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 6
+                          ..color = Colors.black,
+                          )
+                        ),
+                    // this is the inside text
+                    Text(
+                      'Date and Time',
+                      style: TextStyle(
+                        fontFamily: 'Gloock',
+                        fontSize: 25,
+                        color: Colors.grey[300],
+                              ),
+                            ),
+                          ]
                     )
                   ]
-                )
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget> [
+                    Container(
+                    width: 200, // Set the width of the container
+                    height: 200,
+                    decoration:  BoxDecoration(
+                        image:  DecorationImage(
+                        image:  AssetImage('assets/weather-icons-set/CLOUDS/png clouds/001lighticons-01.png'),
+                        fit: BoxFit.cover,
+                      ),
+                      ),
+                    ),
+                  ]
+                ),
+                SizedBox(height: 0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget> [
+                  Container(
+                    child: Column(
+                      children: <Widget> [
+                        Stack(
+                          children: <Widget> [
+                            Text(
+                            '76°',
+                            style: TextStyle(
+                            fontFamily: 'Gloock',
+                            fontSize: 70,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                              )
+                            ),
+                            Text(
+                              '76°',
+                              style: TextStyle(
+                              fontFamily: 'Gloock',
+                              fontSize: 70,
+                              color: Colors.grey[300],
+                              ),
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ),
+                ]
+               ),
+               Row (
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget> [
+                    Container(
+                    child: Column(
+                      children: <Widget> [
+                        Stack(
+                          children: <Widget> [
+                            Text(
+                            'Current Weather',
+                            style: TextStyle(
+                            fontFamily: 'Gloock',
+                            fontSize: 40,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                              )
+                            ),
+                            Text(
+                              'Current Weather',
+                              style: TextStyle(
+                              fontFamily: 'Gloock',
+                              fontSize: 40,
+                              color: Colors.grey[300],
+                              ),
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ),
+                    ]
+                  )
               ]
-            )
+            ),
           )
         ]
       )
