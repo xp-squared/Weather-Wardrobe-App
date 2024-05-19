@@ -50,6 +50,7 @@ body: Center(
         ),
       ),
 
+'new' keyword is obsolete in dart 2, no longer needed to be used when making new classes
 ************************************************************************************************************ */ 
 
 import 'package:flutter/material.dart';
@@ -60,40 +61,70 @@ void main() => runApp(MaterialApp(
 
 
 
-class MyHomePage extends StatelessWidget { // extending staeless widget class in flutter
+class MyHomePage extends StatefulWidget {  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+ // extending staeless widget class in flutter
   @override
   Widget build(BuildContext context) { // this build function builds up the widget tree
      // beginning to build the scaffold (top level container), wrapper to layer widgets like buttons and body text
-    return Scaffold ( 
+    return Material ( 
+      type: MaterialType.transparency,
+      child: Stack( // stack allows for overlapping of widgets, useful when using background image and placing things over it
+        children: <Widget>[
+           Container(
+          decoration:  BoxDecoration(
+            image:  DecorationImage(
+              image:  AssetImage('assets/Background1.jpg'),
+              fit: BoxFit.fill,
+            ),
+            ),
+          ),
 
-      appBar: AppBar (
-        title: const Text(
-          "Current Location",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 30, 
-            fontWeight: FontWeight.w500, // boldness
-            fontFamily: 'Gloock'
-          ),
-        ),
-        backgroundColor: Color.fromARGB(209, 139, 139, 139),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(30.0),
-        child: Container(
-          height: 3.0, // thickness of black line
-          color: Colors.black.withOpacity(.5), // opacity of the thin black line
-          ),
-          ),
-        ),
-      body: Container(
-        padding: EdgeInsets.fromLTRB(5, 5, 5, 5), // left top right bottom
-        margin: EdgeInsets.all(50),
-        color: Colors.red[400],
-        child: Image(
-          image: AssetImage('assets/weather-icons-set/CLOUDS/png clouds/001lighticons-01.png'),
-        ),
+          Container(
+            child: Column(
+              children: <Widget> [
+                SizedBox(height: 90),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget> [
+                    // using stack to layer things once more, layering text on top of each other to get a border effect
+                    Stack(
+                      children: <Widget> [
+                    // this text is the border
+                     Text(
+                      'Current Location',
+                      style: TextStyle(
+                        fontFamily: 'Gloock',
+                        fontSize: 40,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 6
+                          ..color = Colors.black,
+                      )
+                    ),
+                    // this is the inside text
+                    Text(
+                      'Current Location',
+                      style: TextStyle(
+                        fontFamily: 'Gloock',
+                        fontSize: 40,
+                        color: Colors.grey[300],
+                          ),
+                        ),
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          )
+        ]
       )
-    );
-    // end of return statement always put semicolon!
+    );   // end of return statement always put semicolon!
   }
 }
