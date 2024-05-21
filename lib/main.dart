@@ -60,6 +60,7 @@ positioning, and sizing widgets. These are widgets that can contain multiple chi
 
 import 'package:flutter/material.dart';
 
+
 void main() => runApp(MaterialApp( 
   home: MyHomePage(),
   )); // root of the widget tree: MyApp, this begins the whole process of running
@@ -71,6 +72,10 @@ class MyHomePage extends StatefulWidget {  @override
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+
+
+  
  // extending staeless widget class in flutter
   @override
   Widget build(BuildContext context) { // this build function builds up the widget tree
@@ -83,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
           decoration:  BoxDecoration(
             image:  DecorationImage(
-              image:  AssetImage('assets/Background1.jpg'),
+              image:  AssetImage('assets/Background2.jpg'),
               fit: BoxFit.fill,
             ),
             ),
@@ -136,7 +141,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget> [
                     // this text is the border
                      Text(
-                      'Date and Time',
+                      //'Date and Time', 
+                      DateTime.now().toString(),
                       style: TextStyle(
                         fontFamily: 'Gloock',
                         fontSize: 25,
@@ -148,7 +154,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                     // this is the inside text
                     Text(
-                      'Date and Time',
+                      //'Date and Time',
+                      DateTime.now().toString(),
                       style: TextStyle(
                         fontFamily: 'Gloock',
                         fontSize: 25,
