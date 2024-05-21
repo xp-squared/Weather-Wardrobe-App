@@ -51,6 +51,11 @@ body: Center(
       ),
 
 'new' keyword is obsolete in dart 2, no longer needed to be used when making new classes
+
+The container widget comes to the rescue and provides you with various common painting, 
+positioning, and sizing widgets. These are widgets that can contain multiple child widgets.
+ The row is the widget that can display various child widgets in a horizontal manner. 
+ The column displays child widgets in a vertical manner
 ************************************************************************************************************ */ 
 
 import 'package:flutter/material.dart';
@@ -69,24 +74,25 @@ class _MyHomePageState extends State<MyHomePage> {
  // extending staeless widget class in flutter
   @override
   Widget build(BuildContext context) { // this build function builds up the widget tree
-     // beginning to build the scaffold (top level container), wrapper to layer widgets like buttons and body text
     return Material ( 
       type: MaterialType.transparency,
       child: Stack( // stack allows for overlapping of widgets, useful when using background image and placing things over it
         children: <Widget>[
+
+          // background image
           Container(
           decoration:  BoxDecoration(
             image:  DecorationImage(
-              image:  AssetImage('assets/Background3.png'),
+              image:  AssetImage('assets/Background1.jpg'),
               fit: BoxFit.fill,
             ),
             ),
           ),
 
-          Container(
-            child: Column(
+           // all text and information of the app is in this section
+           Column(
               children: <Widget> [
-                SizedBox(height: 100),
+                SizedBox(height: 70),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
@@ -96,26 +102,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     Stack(
                       children: <Widget> [
                     // this text is the border
-                     Text(
-                      'Current Location',
-                      style: TextStyle(
-                        fontFamily: 'Gloock',
-                        fontSize: 40,
-                        foreground: Paint()
-                          ..style = PaintingStyle.stroke
-                          ..strokeWidth = 6
-                          ..color = Colors.black,
-                          )
-                        ),
-                    // this is the inside text
-                    Text(
-                      'Current Location',
-                      style: TextStyle(
-                        fontFamily: 'Gloock',
-                        fontSize: 40,
-                        color: Colors.grey[300],
+                      Text(
+                        'Current Location',
+                        style: TextStyle(
+                          fontFamily: 'Gloock',
+                          fontSize: 40,
+                          foreground: Paint()
+                            ..style = PaintingStyle.stroke
+                            ..strokeWidth = 6
+                            ..color = Colors.black,
+                            )
+                          ),
+                      // this is the inside text
+                        Text(
+                        'Current Location',
+                        style: TextStyle(
+                          fontFamily: 'Gloock',
+                          fontSize: 40,
+                          color: Colors.white,
+                                ),
                               ),
-                            ),
                           ]
                         ),
                   ]
@@ -146,38 +152,42 @@ class _MyHomePageState extends State<MyHomePage> {
                       style: TextStyle(
                         fontFamily: 'Gloock',
                         fontSize: 25,
-                        color: Colors.grey[300],
+                        color: Colors.white,
                               ),
                             ),
                           ]
                     )
                   ]
                 ),
+                const SizedBox(height: 5),
+                Divider(
+                  color: Colors.black,
+                  thickness: 3,
+                  indent: 35,
+                  endIndent: 35,
+                ),
+                SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget> [
-                    Container(
-                    width: 200, // Set the width of the container
-                    height: 200,
-                    decoration:  BoxDecoration(
-                        image:  DecorationImage(
-                        image:  AssetImage('assets/weather-icons-set/CLOUDS/png clouds/001lighticons-01.png'),
-                        fit: BoxFit.cover,
-                      ),
-                      ),
+                    Icon(
+                      // https://fonts.google.com/icons?icon.query=weather other weather icons
+                      // We want to come back and change this based on the current weather
+                      Icons.cloud, 
+                      color: Colors.white,
+                      size: 120.0,
                     ),
                   ]
                 ),
-                SizedBox(height: 0),
+                SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget> [
-                  Container(
-                    child: Column(
+                  Column(
                       children: <Widget> [
                         Stack(
                           children: <Widget> [
@@ -185,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             '76°',
                             style: TextStyle(
                             fontFamily: 'Gloock',
-                            fontSize: 70,
+                            fontSize: 60,
                             foreground: Paint()
                               ..style = PaintingStyle.stroke
                               ..strokeWidth = 6
@@ -196,15 +206,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               '76°',
                               style: TextStyle(
                               fontFamily: 'Gloock',
-                              fontSize: 70,
-                              color: Colors.grey[300],
+                              fontSize: 60,
+                              color: Colors.white,
                               ),
                             )
                           ]
                         )
                       ]
                     )
-                  ),
                 ]
                ),
                Row (
@@ -212,8 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget> [
-                    Container(
-                    child: Column(
+                    Column(
                       children: <Widget> [
                         Stack(
                           children: <Widget> [
@@ -233,19 +241,246 @@ class _MyHomePageState extends State<MyHomePage> {
                               style: TextStyle(
                               fontFamily: 'Gloock',
                               fontSize: 40,
-                              color: Colors.grey[300],
+                              color: Colors.white,
                               ),
                             )
                           ]
                         )
                       ]
                     )
-                  ),
                     ]
-                  )
+                  ),
+                const SizedBox(height: 5),
+                const  Divider(
+                  color: Colors.black,
+                  thickness: 3,
+                  indent: 35,
+                  endIndent: 35,
+                
+                ),
+                const SizedBox(height: 5),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget> [
+                    Column(
+                      children: <Widget> [
+                        Stack(
+                          children: <Widget> [
+                            Container( // needed container for box constraints so no overflow on the screen
+                            constraints: BoxConstraints(maxWidth: 300),
+                            child: Text(
+                            textAlign: TextAlign.center,
+                            'Recommended Clothing!',
+                            style: TextStyle(
+                            fontFamily: 'Gloock',
+                            fontSize: 30,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                              )
+                            )
+                            ),
+                            Container(
+                              constraints: BoxConstraints(maxWidth: 300),
+                              child: Text(
+                              textAlign: TextAlign.center,
+                              'Recommended Clothing!',
+                              style: TextStyle(
+                              fontFamily: 'Gloock',
+                              fontSize: 30,
+                              color: Colors.white,
+                              ),
+                            )
+                            )
+                          ]
+                        )
+                      ]
+                    ),
+                  ]
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget> [
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start, 
+                        children: <Widget> [
+                        Stack(
+                          children: <Widget> [
+                            Text(
+                            textAlign: TextAlign.left,
+                            'Hat: ',
+                            style: TextStyle(
+                            fontFamily: 'Gloock',
+                            fontSize: 25,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                              )
+                            ),
+                            Text(
+                              textAlign: TextAlign.left,
+                              'Hat: ',
+                              style: TextStyle(
+                              fontFamily: 'Gloock',
+                              fontSize: 25,
+                              color: Colors.white,
+                              ),
+                            ),
+                          ]
+                        ),
+                        SizedBox(height: 10),
+                        Stack(
+                          children: <Widget> [
+                            Text(
+                            textAlign: TextAlign.left,
+                            'Jacket: ',
+                            style: TextStyle(
+                            fontFamily: 'Gloock',
+                            fontSize: 25,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                              )
+                            ),
+                            Text(
+                              textAlign: TextAlign.left,
+                              'Jacket: ',
+                              style: TextStyle(
+                              fontFamily: 'Gloock',
+                              fontSize: 25,
+                              color: Colors.white,
+                              ),
+                            ),
+                          ]
+                        ),
+                        SizedBox(height: 10),
+                        Stack(
+                          children: <Widget> [
+                            Text(
+                            textAlign: TextAlign.left,
+                            'Shirt: ',
+                            style: TextStyle(
+                            fontFamily: 'Gloock',
+                            fontSize: 25,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                              )
+                            ),
+                            Text(
+                              textAlign: TextAlign.left,
+                              'Shirt: ',
+                              style: TextStyle(
+                              fontFamily: 'Gloock',
+                              fontSize: 25,
+                              color: Colors.white,
+                              ),
+                            ),
+                          ]
+                        ),
+                      ]
+                      ),
+                      SizedBox(width: 80),
+                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start, 
+                        children: <Widget> [
+                        Stack(
+                          children: <Widget> [
+                            Text(
+                            textAlign: TextAlign.left,
+                            'Pants: ',
+                            style: TextStyle(
+                            fontFamily: 'Gloock',
+                            fontSize: 25,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                              )
+                            ),
+                            Text(
+                              textAlign: TextAlign.left,
+                              'Pants: ',
+                              style: TextStyle(
+                              fontFamily: 'Gloock',
+                              fontSize: 25,
+                              color: Colors.white,
+                              ),
+                            ),
+                          ]
+                        ),
+                        SizedBox(height: 10),
+                        Stack(
+                          children: <Widget> [
+                            Text(
+                            textAlign: TextAlign.left,
+                            'Shoes: ',
+                            style: TextStyle(
+                            fontFamily: 'Gloock',
+                            fontSize: 25,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                              )
+                            ),
+                            Text(
+                              textAlign: TextAlign.left,
+                              'Shoes: ',
+                              style: TextStyle(
+                              fontFamily: 'Gloock',
+                              fontSize: 25,
+                              color: Colors.white,
+                              ),
+                            ),
+                          ]
+                        ),
+                        SizedBox(height: 10),
+                        Stack(
+                          children: <Widget> [
+                            Text(
+                            textAlign: TextAlign.left,
+                            // accessorys like umbrellas etc
+                            'Accessory: ',
+                            style: TextStyle(
+                            fontFamily: 'Gloock',
+                            fontSize: 25,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                              )
+                            ),
+                            Text(
+                              textAlign: TextAlign.left,
+                              'Accessory: ',
+                              style: TextStyle(
+                              fontFamily: 'Gloock',
+                              fontSize: 25,
+                              color: Colors.white,
+                              ),
+                            ),
+                          ]
+                        ),
+                      ]
+                      ),
+                  ]
+                )
+
+
+
+                // this is where we are still inside of our column
               ]
             ),
-          )
         ]
       )
     );   // end of return statement always put semicolon!
