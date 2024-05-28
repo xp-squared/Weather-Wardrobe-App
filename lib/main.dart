@@ -12,7 +12,6 @@ extends (inheritance) : used to create a class that inherits properties and beha
 reffered to as superclass. When a class textends another class, it gains access to all the variable, methods,
 constructors defined in the super class
 
-
 **************************************************************************************************************
 Notations: 
 
@@ -56,9 +55,23 @@ The container widget comes to the rescue and provides you with various common pa
 positioning, and sizing widgets. These are widgets that can contain multiple child widgets.
  The row is the widget that can display various child widgets in a horizontal manner. 
  The column displays child widgets in a vertical manner
-************************************************************************************************************ */ 
+************************************************************************************************************ 
+Implementation Notes: 
+
+- Button to update location: easier to implement and more efficient for battery life
+- Automatically updating the update without a button: Uses more battery and is harder to make
+
+- Add error handling
+- Loading Indicators as location is getting grabbed?
+
+*************************************************************************************************************
+*/ 
+
+
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'dart:async';
 
 
 void main() => runApp(MaterialApp( 
@@ -72,12 +85,30 @@ class MyHomePage extends StatefulWidget {  @override
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String _dateTime = ' ';
 
-
-
-  
  // extending staeless widget class in flutter
   @override
+//DateFormat('MM-dd-yyyy    KK:mm:ss').format(DateTime.now()),
+
+  void initState() {
+    super.initState();
+    _dateTime = getCurrentDateTime(); // Set initial date and time
+    Timer.periodic(Duration(seconds: 1), (Timer t) => _updateDateTime()); // Update every second
+  }
+
+  void _updateDateTime() {
+    setState(() {
+      _dateTime = getCurrentDateTime();
+    });
+  }
+
+  // Method to get the current date and time
+  String getCurrentDateTime() {
+    final now = DateTime.now();
+    return DateFormat('MM-dd-yyyy    KK:mm:ss').format(now);
+  }
+
   Widget build(BuildContext context) { // this build function builds up the widget tree
     return Material ( 
       type: MaterialType.transparency,
@@ -88,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
           decoration:  BoxDecoration(
             image:  DecorationImage(
-              image:  AssetImage('assets/Background2.jpg'),
+              image:  AssetImage('assets/Background3.png'),
               fit: BoxFit.fill,
             ),
             ),
@@ -108,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget> [
                     // this text is the border
                       Text(
+                        // ADD CONSTRAINTS, LOCATION NAMES MAY BE LONGER !!!
                         'Current Location',
                         style: TextStyle(
                           fontFamily: 'Gloock',
@@ -142,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     // this text is the border
                      Text(
                       //'Date and Time', 
-                      DateTime.now().toString(),
+                      _dateTime,
                       style: TextStyle(
                         fontFamily: 'Gloock',
                         fontSize: 25,
@@ -155,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     // this is the inside text
                     Text(
                       //'Date and Time',
-                      DateTime.now().toString(),
+                      _dateTime,
                       style: TextStyle(
                         fontFamily: 'Gloock',
                         fontSize: 25,
@@ -481,10 +513,50 @@ class _MyHomePageState extends State<MyHomePage> {
                       ]
                       ),
                   ]
-                )
-
-
-
+                ),
+                const SizedBox(height: 20),
+                const  Divider(
+                  color: Colors.black,
+                  thickness: 3,
+                  indent: 35,
+                  endIndent: 35,
+                ),
+                const SizedBox(height: 40),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      side: BorderSide(width: 3.0, color: Colors.white),
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      backgroundColor: Colors.transparent,
+                    ),
+                    onPressed: () {
+                      // Functionality to get location will be added here later
+                    },
+                    child: Stack(
+                      children: <Widget>[
+                        // this text is the border
+                        Text(
+                          'Get Location',
+                          style: TextStyle(
+                            fontFamily: 'Gloock',
+                            fontSize: 25,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 4
+                              ..color = Colors.black,
+                          ),
+                        ),
+                        // this is the inside text
+                        Text(
+                          'Get Location',
+                          style: TextStyle(
+                            fontFamily: 'Gloock',
+                            fontSize: 25,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 // this is where we are still inside of our column
               ]
             ),
