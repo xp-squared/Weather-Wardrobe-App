@@ -59,10 +59,15 @@ positioning, and sizing widgets. These are widgets that can contain multiple chi
 Implementation Notes: 
 
 - Button to update location: easier to implement and more efficient for battery life
-- Automatically updating the update without a button: Uses more battery and is harder to make
+- When different location time changes possibly?
 
 - Add error handling
 - Loading Indicators as location is getting grabbed?
+
+- Weather Icon changing on the weather
+- Clothing recommendations changing on weather
+
+- ADD CONSTRAINTS TO CURRENT LOCATION
 
 *************************************************************************************************************
 */ 
@@ -71,6 +76,8 @@ Implementation Notes:
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 import 'dart:async';
 
 
@@ -86,10 +93,11 @@ class MyHomePage extends StatefulWidget {  @override
 
 class _MyHomePageState extends State<MyHomePage> {
   String _dateTime = ' ';
+  String _currentCity = 'Unknown';
 
- // extending staeless widget class in flutter
+
+ // extending stateless widget class in flutter
   @override
-//DateFormat('MM-dd-yyyy    KK:mm:ss').format(DateTime.now()),
 
   void initState() {
     super.initState();
@@ -108,6 +116,41 @@ class _MyHomePageState extends State<MyHomePage> {
     final now = DateTime.now();
     return DateFormat('MM-dd-yyyy    KK:mm:ss').format(now);
   }
+
+  Future<String> _getCurrentCityAndState() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  // Check if location services are enabled
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      return Future.error('Location permissions are denied.');
+    }
+  }
+  
+  if (permission == LocationPermission.deniedForever) {
+    return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+  }
+
+  // Get the current position
+  Position position = await Geolocator.getCurrentPosition();
+  // Use the Geocoding package to get the city and state name from coordinates
+  List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+  Placemark place = placemarks[0];
+
+  // Combine city and state
+  String city = place.locality ?? 'Unknown';
+  String state = place.administrativeArea ?? 'Unknown';
+  return '$city, $state';
+}
+
 
   Widget build(BuildContext context) { // this build function builds up the widget tree
     return Material ( 
@@ -139,11 +182,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget> [
                     // this text is the border
                       Text(
-                        // ADD CONSTRAINTS, LOCATION NAMES MAY BE LONGER !!!
-                        'Current Location',
+                        _currentCity,
                         style: TextStyle(
                           fontFamily: 'Gloock',
-                          fontSize: 40,
+                          fontSize: 45,
                           foreground: Paint()
                             ..style = PaintingStyle.stroke
                             ..strokeWidth = 6
@@ -152,10 +194,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                       // this is the inside text
                         Text(
-                        'Current Location',
+                        _currentCity,
                         style: TextStyle(
                           fontFamily: 'Gloock',
-                          fontSize: 40,
+                          fontSize: 45,
                           color: Colors.white,
                                 ),
                               ),
@@ -177,7 +219,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       _dateTime,
                       style: TextStyle(
                         fontFamily: 'Gloock',
-                        fontSize: 25,
+                        fontSize: 30,
                         foreground: Paint()
                           ..style = PaintingStyle.stroke
                           ..strokeWidth = 6
@@ -190,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       _dateTime,
                       style: TextStyle(
                         fontFamily: 'Gloock',
-                        fontSize: 25,
+                        fontSize: 30,
                         color: Colors.white,
                               ),
                             ),
@@ -528,8 +570,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       backgroundColor: Colors.transparent,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       // Functionality to get location will be added here later
+                      try {
+                        String cityAndState = await _getCurrentCityAndState();
+                        setState(() {
+                          _currentCity = cityAndState;
+                        });
+                      } catch (e) {
+                        print(e);
+                      }
                     },
                     child: Stack(
                       children: <Widget>[
