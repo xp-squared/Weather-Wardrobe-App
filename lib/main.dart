@@ -58,34 +58,26 @@ positioning, and sizing widgets. These are widgets that can contain multiple chi
 ************************************************************************************************************ 
 Implementation Notes: 
 
-- Button to update location: easier to implement and more efficient for battery life
 - When different location time changes possibly?
-
 - Add error handling
-- Loading Indicators as location is getting grabbed?
-
 - Weather Icon changing on the weather
 - Clothing recommendations changing on weather
-
-- ADD CONSTRAINTS TO CURRENT LOCATION
+- ADD CONSTRAINTS TO CURRENT LOCATION AS IT WILL GO OFF SCREEN FOR LONG LOCATIONS
+- Background changes based on time of day
 
 *************************************************************************************************************
 */ 
-
-
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'dart:async';
+import 'package:weatherapi/weatherapi.dart';
 
 
 void main() => runApp(MaterialApp( 
   home: MyHomePage(),
   )); // root of the widget tree: MyApp, this begins the whole process of running
-
-
 
 class MyHomePage extends StatefulWidget {  @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -94,11 +86,12 @@ class MyHomePage extends StatefulWidget {  @override
 class _MyHomePageState extends State<MyHomePage> {
   String _dateTime = ' ';
   String _currentCity = 'Unknown';
-
+  String _currentWeather = 'Unknown';
+  String _currentTemperature = 'Unknown';
+  WeatherRequest wr = WeatherRequest('2b3bb4cc90be49ecaab174621243105');
 
  // extending stateless widget class in flutter
   @override
-
   void initState() {
     super.initState();
     _dateTime = getCurrentDateTime(); // Set initial date and time
@@ -117,39 +110,69 @@ class _MyHomePageState extends State<MyHomePage> {
     return DateFormat('MM-dd-yyyy    KK:mm:ss').format(now);
   }
 
-  Future<String> _getCurrentCityAndState() async {
-  bool serviceEnabled;
-  LocationPermission permission;
+  Future<Position> _getUserPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
-  // Check if location services are enabled
-  serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    return Future.error('Location services are disabled.');
-  }
+    // Check if location services are enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+     if (!serviceEnabled) {
+       throw Exception('Location services are disabled.');
+     }
 
-  permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      return Future.error('Location permissions are denied.');
+     permission = await Geolocator.checkPermission();
+     if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+       if (permission == LocationPermission.denied) {
+         throw Exception('Location permissions are denied.');
+        }
+      }
+
+    if (permission == LocationPermission.deniedForever) {
+      throw Exception('Location permissions are permanently denied, we cannot request permissions.');
     }
-  }
-  
-  if (permission == LocationPermission.deniedForever) {
-    return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+
+    // Get the current position
+    return await Geolocator.getCurrentPosition();
   }
 
-  // Get the current position
-  Position position = await Geolocator.getCurrentPosition();
-  // Use the Geocoding package to get the city and state name from coordinates
-  List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
-  Placemark place = placemarks[0];
 
-  // Combine city and state
-  String city = place.locality ?? 'Unknown';
-  String state = place.administrativeArea ?? 'Unknown';
-  return '$city, $state';
-}
+  Future<String> _getTemperature() async {
+  try {
+    Position position = await _getUserPosition();
+
+    // Fetch weather data using the WeatherAPI
+    RealtimeWeather rw = await wr.getRealtimeWeatherByLocation(position.latitude, position.longitude);
+    final temperature = rw.current.tempF;
+
+    // Return temperature
+    return '$temperature°F';
+  } catch (e) {
+    return 'Error: ${e.toString()}';
+  }
+  }
+
+  Future<String> _getLocationWeather() async {
+    Position position = await _getUserPosition();
+    // Use the Geocoding package to get the city and state name from coordinates
+    RealtimeWeather rw = await wr.getRealtimeWeatherByLocation(position.latitude, position.longitude);
+    final weather = rw.current.condition.text;
+
+    // Return weather condition
+    return '$weather';
+  }
+
+
+  Future<String> _getCurrentCityAndState() async {
+    Position position = await _getUserPosition();
+    // Use the Geocoding package to get the city and state name from coordinates
+    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+    Placemark place = placemarks[0];
+    // Combine city and state
+    String city = place.locality ?? 'Unknown';
+    String state = place.administrativeArea ?? 'Unknown';
+    return '$city, $state';
+  }
 
 
   Widget build(BuildContext context) { // this build function builds up the widget tree
@@ -273,7 +296,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         Stack(
                           children: <Widget> [
                             Text(
-                            '76°',
+                            //'76°',
+                            _currentTemperature,
                             style: TextStyle(
                             fontFamily: 'Gloock',
                             fontSize: 60,
@@ -284,7 +308,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               )
                             ),
                             Text(
-                              '76°',
+                              //'76°',
+                               _currentTemperature,
                               style: TextStyle(
                               fontFamily: 'Gloock',
                               fontSize: 60,
@@ -307,10 +332,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         Stack(
                           children: <Widget> [
                             Text(
-                            'Current Weather',
+                            _currentWeather,
+                            //'Current Weather',
                             style: TextStyle(
                             fontFamily: 'Gloock',
-                            fontSize: 40,
+                            fontSize: 40, //40
                             foreground: Paint()
                               ..style = PaintingStyle.stroke
                               ..strokeWidth = 6
@@ -318,7 +344,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               )
                             ),
                             Text(
-                              'Current Weather',
+                              _currentWeather,
+                              //'Current Weather',
                               style: TextStyle(
                               fontFamily: 'Gloock',
                               fontSize: 40,
@@ -574,8 +601,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       // Functionality to get location will be added here later
                       try {
                         String cityAndState = await _getCurrentCityAndState();
+                        String locationsWeather = await _getLocationWeather();
+                        String temperature = await _getTemperature();
                         setState(() {
                           _currentCity = cityAndState;
+                          _currentWeather = locationsWeather;
+                          _currentTemperature = temperature;
                         });
                       } catch (e) {
                         print(e);
