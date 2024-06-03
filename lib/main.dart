@@ -64,6 +64,8 @@ Implementation Notes:
 - Clothing recommendations changing on weather
 - ADD CONSTRAINTS TO CURRENT LOCATION AS IT WILL GO OFF SCREEN FOR LONG LOCATIONS
 - Background changes based on time of day
+- Finish read me page on github
+- add MIT liscense on github
 
 *************************************************************************************************************
 */ 
