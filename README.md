@@ -1,16 +1,27 @@
 # Weather-Wardrobe
 
-A new Flutter project.
+WeatherWardrobe is a mobile application that provides weather-based clothing recommendations, helping users choose the perfect outfit for any weather condition.
 
-## Getting Started
+Features
+Real-time Weather Data: Fetches current weather and forecasts using Weather API.
+Personalized Recommendations: Offers clothing suggestions tailored to the weather conditions.
+User-Friendly Interface: Easy navigation and seamless user experience with Flutter and Dart.
+Custom Widgets: Displays current weather, forecast, and clothing recommendations.
 
-This project is a starting point for a Flutter application.
+Screenshots
 
-A few resources to get you started if this is your first Flutter project:
+Usage
+Open the app and allow location access for accurate weather data.
+View current weather and forecast on the home screen.
+Get clothing recommendations based on the current and upcoming weather conditions.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Technologies Used
+Flutter & Dart: For front-end development and UI design.
+WeatherAPI: For fetching real-time weather data.
+Git: For version control and collaboration.
+VS Code: As the development environment.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Contact
+For any inquiries or suggestions, feel free to reach out:
+Email: zchriste16@gmail.com
+LinkedIn: https://www.linkedin.com/in/zane-christe/
