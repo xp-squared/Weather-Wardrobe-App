@@ -89,7 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
   String _currentCity = 'Unknown';
   String _currentWeather = 'Unknown';
   String _currentTemperature = 'Unknown';
+  String _bgImage = 'Unknown';
   WeatherRequest wr = WeatherRequest('2b3bb4cc90be49ecaab174621243105');
+
 
  // extending stateless widget class in flutter
   @override
@@ -147,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final temperature = rw.current.tempF;
 
     // Return temperature
-    return '$temperature°F';
+    return '$temperature°';
   } catch (e) {
     return 'Error: ${e.toString()}';
   }
@@ -172,11 +174,36 @@ class _MyHomePageState extends State<MyHomePage> {
     // Combine city and state
     String city = place.locality ?? 'Unknown';
     String state = place.administrativeArea ?? 'Unknown';
+     // condition ? ExprIfTrue : ExprIfFalse
+     
     return '$city, $state';
   }
 
 
   Widget build(BuildContext context) { // this build function builds up the widget tree
+    
+    // changing the background based on the time of the day
+    final int hour = DateTime.now().hour;
+    
+    if (0 <= hour && hour < 6) {
+      _bgImage = 'Background5.jpeg';
+    }
+    else if (6 <= hour && hour < 9) {
+      _bgImage = 'Background2.jpeg';
+    }
+    else if (9 <= hour && hour < 12) {
+      _bgImage = 'Background1.jpg';
+    }
+    else if (12 <= hour && hour < 18) {
+      _bgImage = 'Background3.png';
+    }
+    else if (18 <= hour && hour < 21) {
+      _bgImage = 'Background4.jpeg';
+    }
+    else if (0 <= hour && hour < 24) {
+      _bgImage = 'Background6.jpeg';
+    }
+    
     return Material ( 
       type: MaterialType.transparency,
       child: Stack( // stack allows for overlapping of widgets, useful when using background image and placing things over it
@@ -186,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
           decoration:  BoxDecoration(
             image:  DecorationImage(
-              image:  AssetImage('assets/Background3.png'),
+              image:  AssetImage('assets/$_bgImage'),
               fit: BoxFit.fill,
             ),
             ),
