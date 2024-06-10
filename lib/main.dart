@@ -58,12 +58,10 @@ positioning, and sizing widgets. These are widgets that can contain multiple chi
 ************************************************************************************************************ 
 Implementation Notes: 
 
-- When different location time changes possibly?
+- When different location time changes based on their time zone. 
 - Add error handling
 - Weather Icon changing on the weather
-- Clothing recommendations changing on weather
 - ADD CONSTRAINTS TO CURRENT LOCATION AS IT WILL GO OFF SCREEN FOR LONG LOCATIONS
-- Background changes based on time of day
 - Finish read me page on github
 
 *************************************************************************************************************
@@ -89,8 +87,53 @@ class _MyHomePageState extends State<MyHomePage> {
   String _currentCity = 'Unknown';
   String _currentWeather = 'Unknown';
   String _currentTemperature = 'Unknown';
-  String _bgImage = 'Unknown';
+  String _bgImage = 'Background3.png'; // always will be 3 if error occurs
   WeatherRequest wr = WeatherRequest('2b3bb4cc90be49ecaab174621243105');
+  List<String> _recommendedClothing = [];
+
+static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
+    'Sunny': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Boots'],
+      'chilly': ['Jacket', 'Long pants', 'Closed shoes'],
+      'cool': ['Light jacket', 'Jeans', 'Sneakers'],
+      'warm': ['T-shirt', 'Shorts', 'Sandals'],
+      'hot': ['Tank top', 'Shorts', 'Flip-flops'],
+    },
+    'Partly cloudy': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Boots'],
+      'chilly': ['Jacket', 'Long pants', 'Closed shoes'],
+      'cool': ['Light jacket', 'Jeans', 'Sneakers'],
+      'warm': ['Short Sleeve T-shirt', 'Shorts', 'Sandals'],
+      'hot': ['Tank top', 'Shorts', 'Flip-flops'],
+    },
+    'Rain': {
+      'freezing': ['Raincoat', 'Waterproof pants', 'Boots'],
+      'chilly': ['Raincoat', 'Waterproof shoes', 'Umbrella'],
+      'cool': ['Light rain jacket', 'Waterproof shoes', 'Umbrella'],
+      'warm': ['Light rain jacket', 'Shorts', 'Waterproof sandals'],
+      'hot': ['Raincoat', 'Shorts', 'Waterproof sandals'],
+    },
+    // ADD MORE CONDITIONS THERE IS A LOT OF WEATHER
+  };
+
+  String _getTemperatureRange(String temp) {
+    double tempF = double.parse(temp.replaceAll('°', ''));
+    if (tempF < 32) {
+      return 'freezing';
+    } 
+    else if (tempF < 50) {
+      return 'chilly';
+    } 
+    else if (tempF < 65) {
+      return 'cool';
+    } 
+    else if (tempF < 90) {
+      return 'warm';
+    }
+     else {
+      return 'hot';
+    }
+  }
 
 
  // extending stateless widget class in flutter
@@ -200,7 +243,7 @@ class _MyHomePageState extends State<MyHomePage> {
     else if (18 <= hour && hour < 21) {
       _bgImage = 'Background4.jpeg';
     }
-    else if (0 <= hour && hour < 24) {
+    else if (21 <= hour && hour < 24) {
       _bgImage = 'Background6.jpeg';
     }
     
@@ -411,7 +454,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             'Recommended Clothing!',
                             style: TextStyle(
                             fontFamily: 'Gloock',
-                            fontSize: 30,
+                            fontSize: 40,
                             foreground: Paint()
                               ..style = PaintingStyle.stroke
                               ..strokeWidth = 6
@@ -426,7 +469,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               'Recommended Clothing!',
                               style: TextStyle(
                               fontFamily: 'Gloock',
-                              fontSize: 30,
+                              fontSize: 40,
                               color: Colors.white,
                               ),
                             )
@@ -437,20 +480,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ]
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget> [
                     Column(
-                        crossAxisAlignment: CrossAxisAlignment.start, 
+                        crossAxisAlignment: CrossAxisAlignment.center, 
                         children: <Widget> [
-                        Stack(
+                        for (int i = 0; i < _recommendedClothing.length; i++) ...[
+                          Stack(
                           children: <Widget> [
                             Text(
                             textAlign: TextAlign.left,
-                            'Hat: ',
+                            _recommendedClothing[i],
                             style: TextStyle(
                             fontFamily: 'Gloock',
                             fontSize: 25,
@@ -462,184 +506,53 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                             Text(
                               textAlign: TextAlign.left,
-                              'Hat: ',
+                              _recommendedClothing[i],
                               style: TextStyle(
                               fontFamily: 'Gloock',
                               fontSize: 25,
                               color: Colors.white,
                               ),
                             ),
+                            SizedBox(height: 5),
+                          
                           ]
                         ),
-                        SizedBox(height: 10),
-                        Stack(
-                          children: <Widget> [
-                            Text(
-                            textAlign: TextAlign.left,
-                            'Jacket: ',
-                            style: TextStyle(
-                            fontFamily: 'Gloock',
-                            fontSize: 25,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 6
-                              ..color = Colors.black,
-                              )
-                            ),
-                            Text(
-                              textAlign: TextAlign.left,
-                              'Jacket: ',
-                              style: TextStyle(
-                              fontFamily: 'Gloock',
-                              fontSize: 25,
-                              color: Colors.white,
-                              ),
-                            ),
-                          ]
-                        ),
-                        SizedBox(height: 10),
-                        Stack(
-                          children: <Widget> [
-                            Text(
-                            textAlign: TextAlign.left,
-                            'Shirt: ',
-                            style: TextStyle(
-                            fontFamily: 'Gloock',
-                            fontSize: 25,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 6
-                              ..color = Colors.black,
-                              )
-                            ),
-                            Text(
-                              textAlign: TextAlign.left,
-                              'Shirt: ',
-                              style: TextStyle(
-                              fontFamily: 'Gloock',
-                              fontSize: 25,
-                              color: Colors.white,
-                              ),
-                            ),
-                          ]
-                        ),
+                        ]
                       ]
                       ),
-                      SizedBox(width: 80),
-                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start, 
-                        children: <Widget> [
-                        Stack(
-                          children: <Widget> [
-                            Text(
-                            textAlign: TextAlign.left,
-                            'Pants: ',
-                            style: TextStyle(
-                            fontFamily: 'Gloock',
-                            fontSize: 25,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 6
-                              ..color = Colors.black,
-                              )
-                            ),
-                            Text(
-                              textAlign: TextAlign.left,
-                              'Pants: ',
-                              style: TextStyle(
-                              fontFamily: 'Gloock',
-                              fontSize: 25,
-                              color: Colors.white,
-                              ),
-                            ),
-                          ]
-                        ),
-                        SizedBox(height: 10),
-                        Stack(
-                          children: <Widget> [
-                            Text(
-                            textAlign: TextAlign.left,
-                            'Shoes: ',
-                            style: TextStyle(
-                            fontFamily: 'Gloock',
-                            fontSize: 25,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 6
-                              ..color = Colors.black,
-                              )
-                            ),
-                            Text(
-                              textAlign: TextAlign.left,
-                              'Shoes: ',
-                              style: TextStyle(
-                              fontFamily: 'Gloock',
-                              fontSize: 25,
-                              color: Colors.white,
-                              ),
-                            ),
-                          ]
-                        ),
-                        SizedBox(height: 10),
-                        Stack(
-                          children: <Widget> [
-                            Text(
-                            textAlign: TextAlign.left,
-                            // accessorys like umbrellas etc
-                            'Accessory: ',
-                            style: TextStyle(
-                            fontFamily: 'Gloock',
-                            fontSize: 25,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 6
-                              ..color = Colors.black,
-                              )
-                            ),
-                            Text(
-                              textAlign: TextAlign.left,
-                              'Accessory: ',
-                              style: TextStyle(
-                              fontFamily: 'Gloock',
-                              fontSize: 25,
-                              color: Colors.white,
-                              ),
-                            ),
-                          ]
-                        ),
-                      ]
-                      ),
+                       
                   ]
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 const  Divider(
                   color: Colors.black,
                   thickness: 3,
                   indent: 35,
                   endIndent: 35,
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 10),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      side: BorderSide(width: 3.0, color: Colors.white),
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      backgroundColor: Colors.transparent,
-                    ),
-                    onPressed: () async {
-                      // Functionality to get location will be added here later
-                      try {
-                        String cityAndState = await _getCurrentCityAndState();
-                        String locationsWeather = await _getLocationWeather();
-                        String temperature = await _getTemperature();
-                        setState(() {
-                          _currentCity = cityAndState;
-                          _currentWeather = locationsWeather;
-                          _currentTemperature = temperature;
-                        });
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
+                  style: ElevatedButton.styleFrom(
+                    side: BorderSide(width: 3.0, color: Colors.white),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    backgroundColor: Colors.transparent,
+                  ),
+                  onPressed: () async {
+                    try {
+                      String cityAndState = await _getCurrentCityAndState();
+                      String locationsWeather = await _getLocationWeather();
+                      String temperature = await _getTemperature();
+                      String tempRange = _getTemperatureRange(temperature);
+                      setState(() {
+                        _currentCity = cityAndState;
+                        _currentWeather = locationsWeather;
+                        _currentTemperature = temperature;
+                        _recommendedClothing = _clothingRecommendations[_currentWeather]?[tempRange] ?? [];
+                      });
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
                     child: Stack(
                       children: <Widget>[
                         // this text is the border
