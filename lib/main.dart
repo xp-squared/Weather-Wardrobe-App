@@ -63,6 +63,7 @@ Implementation Notes:
 - Weather Icon changing on the weather
 - ADD CONSTRAINTS TO CURRENT LOCATION AS IT WILL GO OFF SCREEN FOR LONG LOCATIONS
 - Finish read me page on github
+- Link back to weatherapi since I used the free version
 
 *************************************************************************************************************
 */ 
@@ -90,8 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
   String _bgImage = 'Background3.png'; // always will be 3 if error occurs
   WeatherRequest wr = WeatherRequest('2b3bb4cc90be49ecaab174621243105');
   List<String> _recommendedClothing = [];
+  String _weatherIconPath = 'assets/weather-icons/sunny.png';
 
-static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
+  static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
     'Sunny': {
       'freezing': ['Heavy coat', 'Warm pants', 'Boots'],
       'chilly': ['Jacket', 'Long pants', 'Closed shoes'],
@@ -113,7 +115,156 @@ static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
       'warm': ['Light rain jacket', 'Shorts', 'Waterproof sandals'],
       'hot': ['Raincoat', 'Shorts', 'Waterproof sandals'],
     },
-    // ADD MORE CONDITIONS THERE IS A LOT OF WEATHER
+    'Overcast': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Boots'],
+      'chilly': ['Jacket', 'Long pants', 'Closed shoes'],
+      'cool': ['Light jacket', 'Jeans', 'Sneakers'],
+      'warm': ['T-shirt', 'Jeans', 'Closed shoes'],
+      'hot': ['Short sleeve shirt', 'Shorts', 'Closed shoes'],
+    },
+    'Cloudy': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Boots'],
+      'chilly': ['Jacket', 'Long pants', 'Closed shoes'],
+      'cool': ['Light jacket', 'Jeans', 'Sneakers'],
+      'warm': ['T-shirt', 'Jeans', 'Closed shoes'],
+      'hot': ['Short sleeve shirt', 'Shorts', 'Closed shoes'],
+    },
+    'Fog': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Boots'],
+      'chilly': ['Jacket', 'Long pants', 'Closed shoes'],
+      'cool': ['Light jacket', 'Jeans', 'Sneakers'],
+      'warm': ['Short sleeve shirt', 'Jeans', 'Closed shoes'],
+      'hot': ['Short sleeve shirt', 'Shorts', 'Closed shoes'],
+    },
+    'Mist': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Boots'],
+      'chilly': ['Jacket', 'Long pants', 'Closed shoes'],
+      'cool': ['Light jacket', 'Jeans', 'Sneakers'],
+      'warm': ['Short sleeve shirt', 'Jeans', 'Closed shoes'],
+      'hot': ['Tanktop', 'Shorts', 'Closed shoes'],
+    },
+    'Snow': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Snow boots'],
+      'chilly': ['Warm coat', 'Thermal pants', 'Boots'],
+      'cool': ['Jacket', 'Jeans', 'Boots'],
+      'warm': ['Light jacket', 'Jeans', 'Closed shoes'],
+      'hot': ['Light jacket', 'Jeans', 'Closed shoes'],
+    },
+    'Light snow': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Snow boots'],
+      'chilly': ['Warm coat', 'Thermal pants', 'Boots'],
+      'cool': ['Jacket', 'Jeans', 'Boots'],
+      'warm': ['Light jacket', 'Jeans', 'Closed shoes'],
+      'hot': ['Light jacket', 'Jeans', 'Closed shoes'],
+    },
+    'Heavy snow': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Snow boots'],
+      'chilly': ['Warm coat', 'Thermal pants', 'Boots'],
+      'cool': ['Jacket', 'Jeans', 'Boots'],
+      'warm': ['Light jacket', 'Jeans', 'Closed shoes'],
+      'hot': ['Light jacket', 'Jeans', 'Closed shoes'],
+    },
+    'Blizzard': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Snow boots'],
+      'chilly': ['Warm coat', 'Thermal pants', 'Boots'],
+      'cool': ['Jacket', 'Jeans', 'Boots'],
+      'warm': ['Light jacket', 'Jeans', 'Closed shoes'],
+      'hot': ['Light jacket', 'Jeans', 'Closed shoes'],
+    },
+    'Sleet': {
+      'freezing': ['Raincoat', 'Waterproof pants', 'Boots'],
+      'chilly': ['Raincoat', 'Waterproof shoes', 'Umbrella'],
+      'cool': ['Light rain jacket', 'Waterproof shoes', 'Umbrella'],
+      'warm': ['Light rain jacket', 'Shorts', 'Waterproof sandals'],
+      'hot': ['Raincoat', 'Shorts', 'Waterproof sandals'],
+    },
+    'Light sleet': {
+      'freezing': ['Raincoat', 'Waterproof pants', 'Boots'],
+      'chilly': ['Raincoat', 'Waterproof shoes', 'Umbrella'],
+      'cool': ['Light rain jacket', 'Waterproof shoes', 'Umbrella'],
+      'warm': ['Light rain jacket', 'Shorts', 'Waterproof sandals'],
+      'hot': ['Raincoat', 'Shorts', 'Waterproof sandals'],
+    },
+    'Heavy sleet': {
+      'freezing': ['Raincoat', 'Waterproof pants', 'Boots'],
+      'chilly': ['Raincoat', 'Waterproof shoes', 'Umbrella'],
+      'cool': ['Light rain jacket', 'Waterproof shoes', 'Umbrella'],
+      'warm': ['Light rain jacket', 'Shorts', 'Waterproof sandals'],
+      'hot': ['Raincoat', 'Shorts', 'Waterproof sandals'],
+    },
+    'Drizzle': {
+      'freezing': ['Raincoat', 'Waterproof pants', 'Boots'],
+      'chilly': ['Raincoat', 'Waterproof shoes', 'Umbrella'],
+      'cool': ['Light rain jacket', 'Waterproof shoes', 'Umbrella'],
+      'warm': ['Light rain jacket', 'Shorts', 'Waterproof sandals'],
+      'hot': ['Raincoat', 'Shorts', 'Waterproof sandals'],
+    },
+    'Freezing drizzle': {
+      'freezing': ['Raincoat', 'Waterproof pants', 'Boots'],
+      'chilly': ['Raincoat', 'Waterproof shoes', 'Umbrella'],
+      'cool': ['Light rain jacket', 'Waterproof shoes', 'Umbrella'],
+      'warm': ['Light rain jacket', 'Shorts', 'Waterproof sandals'],
+      'hot': ['Raincoat', 'Shorts', 'Waterproof sandals'],
+    },
+    'Thunderstorms': {
+      'freezing': ['Raincoat', 'Warm pants', 'Boots'],
+      'chilly': ['Raincoat', 'Long pants', 'Waterproof shoes'],
+      'cool': ['Rain jacket', 'Jeans', 'Waterproof shoes'],
+      'warm': ['Rain jacket', 'Shorts', 'Waterproof sandals'],
+      'hot': ['Raincoat', 'Shorts', 'Waterproof sandals'],
+    },
+    'Light rain': {
+      'freezing': ['Raincoat', 'Warm pants', 'Boots'],
+      'chilly': ['Raincoat', 'Long pants', 'Waterproof shoes'],
+      'cool': ['Rain jacket', 'Jeans', 'Waterproof shoes'],
+      'warm': ['Rain jacket', 'Shorts', 'Waterproof sandals'],
+      'hot': ['Raincoat', 'Shorts', 'Waterproof sandals'],
+    },
+    'Heavy rain': {
+      'freezing': ['Heavycoat', 'Warm pants', 'Boots'],
+      'chilly': ['Raincoat', 'Long pants', 'Waterproof shoes'],
+      'cool': ['Rain jacket', 'Jeans', 'Waterproof shoes'],
+      'warm': ['Rain jacket', 'Shorts', 'Waterproof sandals'],
+      'hot': ['Raincoat', 'Shorts', 'Waterproof sandals'],
+    },
+    'Ice pellets': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Boots'],
+      'chilly': ['Warm coat', 'Long pants', 'Boots'],
+      'cool': ['Jacket', 'Jeans', 'Boots'],
+      'warm': ['Light jacket', 'Jeans', 'Closed shoes'],
+      'hot': ['Light jacket', 'Jeans', 'Closed shoes'],
+    },
+    'Clear': {
+      'freezing': ['Heavy coat', 'Warm pants', 'Boots'],
+      'chilly': ['Jacket', 'Long pants', 'Closed shoes'],
+      'cool': ['Light jacket', 'Jeans', 'Sneakers'],
+      'warm': ['T-shirt', 'Shorts', 'Sandals'],
+      'hot': ['Tank top', 'Shorts', 'Flip-flops'],
+    },
+  };
+
+  final Map<String, String> weatherIcons = {
+    'Sunny': 'assets/weather-icons/sunny.png',
+    'Partly cloudy': 'assets/weather-icons/partly_cloudy.png',
+    'Rain': 'assets/weather-icons/rainy.png',
+    'Overcast': 'assets/weather-icons/overcast.png',
+    'Cloudy': 'assets/weather-icons/cloudy.png',
+    'Fog': 'assets/weather-icons/fog.png',
+    'Mist': 'assets/weather-icons/mist.png',
+    'Snow': 'assets/weather-icons/snow.png',
+    'Light snow': 'assets/weather-icons/light_snow.png',
+    'Heavy snow': 'assets/weather-icons/heavy_snow.png',
+    'Blizzard': 'assets/weather-icons/blizzard.png',
+    'Sleet': 'assets/weather-icons/sleet.png',
+    'Light sleet': 'assets/weather-icons/light_sleet.png',
+    'Heavy sleet': 'assets/weather-icons/heavy_sleet.png',
+    'Drizzle': 'assets/weather-icons/drizzle.png',
+    'Freezing drizzle': 'assets/weather-icons/freezing_drizzle.png',
+    'Thunderstorms': 'assets/weather-icons/thunderstorms.png',
+    'Light rain': 'assets/weather-icons/light_rain.png',
+    'Heavy rain': 'assets/weather-icons/heavy_rain.png',
+    'Ice pellets': 'assets/weather-icons/ice_pellets.png',
+    'Clear': 'assets/weather-icons/clear.png',
   };
 
   String _getTemperatureRange(String temp) {
@@ -134,7 +285,6 @@ static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
       return 'hot';
     }
   }
-
 
  // extending stateless widget class in flutter
   @override
@@ -244,7 +394,7 @@ static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
       _bgImage = 'Background4.jpeg';
     }
     else if (21 <= hour && hour < 24) {
-      _bgImage = 'Background6.jpeg';
+      _bgImage = 'Background5.jpeg';
     }
     
     return Material ( 
@@ -347,12 +497,10 @@ static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget> [
-                    Icon(
-                      // https://fonts.google.com/icons?icon.query=weather other weather icons
-                      // We want to come back and change this based on the current weather
-                      Icons.cloud, 
-                      color: Colors.white,
-                      size: 120.0,
+                    Image.asset(
+                      _weatherIconPath,
+                      width: 120.0,
+                      height: 120.0,
                     ),
                   ]
                 ),
@@ -480,7 +628,7 @@ static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
                     ),
                   ]
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
@@ -497,7 +645,7 @@ static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
                             _recommendedClothing[i],
                             style: TextStyle(
                             fontFamily: 'Gloock',
-                            fontSize: 25,
+                            fontSize: 28,
                             foreground: Paint()
                               ..style = PaintingStyle.stroke
                               ..strokeWidth = 6
@@ -509,11 +657,11 @@ static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
                               _recommendedClothing[i],
                               style: TextStyle(
                               fontFamily: 'Gloock',
-                              fontSize: 25,
+                              fontSize: 28,
                               color: Colors.white,
                               ),
                             ),
-                            SizedBox(height: 5),
+                            SizedBox(height: 20),
                           
                           ]
                         ),
@@ -530,7 +678,7 @@ static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
                   indent: 35,
                   endIndent: 35,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     side: BorderSide(width: 3.0, color: Colors.white),
@@ -547,6 +695,7 @@ static final Map<String, Map<String, List<String>>> _clothingRecommendations = {
                         _currentCity = cityAndState;
                         _currentWeather = locationsWeather;
                         _currentTemperature = temperature;
+                        _weatherIconPath = weatherIcons[locationsWeather] ?? 'assets/weather-icons/sunny.png';
                         _recommendedClothing = _clothingRecommendations[_currentWeather]?[tempRange] ?? [];
                       });
                     } catch (e) {
