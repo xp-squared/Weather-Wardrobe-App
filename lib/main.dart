@@ -243,27 +243,29 @@ class _MyHomePageState extends State<MyHomePage> {
     },
   };
 
+
+  // icons came from https://www.iconfinder.com
   final Map<String, String> weatherIcons = {
-    'Sunny': 'assets/weather-icons/sunny.png',
-    'Partly cloudy': 'assets/weather-icons/partly_cloudy.png',
-    'Rain': 'assets/weather-icons/rainy.png',
-    'Overcast': 'assets/weather-icons/overcast.png',
-    'Cloudy': 'assets/weather-icons/cloudy.png',
-    'Fog': 'assets/weather-icons/fog.png',
+    'Sunny': 'assets/weather-icons/sunny.png', 
+    'Partly cloudy': 'assets/weather-icons/partly_cloudy.png', 
+    'Rain': 'assets/weather-icons/rainy.png', 
+    'Overcast': 'assets/weather-icons/cloudy.png',
+    'Cloudy': 'assets/weather-icons/cloudy.png', 
+    'Fog': 'assets/weather-icons/fog.png', 
     'Mist': 'assets/weather-icons/mist.png',
-    'Snow': 'assets/weather-icons/snow.png',
-    'Light snow': 'assets/weather-icons/light_snow.png',
-    'Heavy snow': 'assets/weather-icons/heavy_snow.png',
-    'Blizzard': 'assets/weather-icons/blizzard.png',
-    'Sleet': 'assets/weather-icons/sleet.png',
-    'Light sleet': 'assets/weather-icons/light_sleet.png',
-    'Heavy sleet': 'assets/weather-icons/heavy_sleet.png',
-    'Drizzle': 'assets/weather-icons/drizzle.png',
-    'Freezing drizzle': 'assets/weather-icons/freezing_drizzle.png',
+    'Snow': 'assets/weather-icons/snow.png', 
+    'Light snow': 'assets/weather-icons/snow.png', 
+    'Heavy snow': 'assets/weather-icons/snow.png', 
+    'Blizzard': 'assets/weather-icons/snow.png', 
+    'Sleet': 'assets/weather-icons/sleet.png', 
+    'Light sleet': 'assets/weather-icons/sleet.png',
+    'Heavy sleet': 'assets/weather-icons/sleet.png',
+    'Drizzle': 'assets/weather-icons/rainy.png',
+    'Freezing drizzle': 'assets/weather-icons/sleet.png',
     'Thunderstorms': 'assets/weather-icons/thunderstorms.png',
-    'Light rain': 'assets/weather-icons/light_rain.png',
-    'Heavy rain': 'assets/weather-icons/heavy_rain.png',
-    'Ice pellets': 'assets/weather-icons/ice_pellets.png',
+    'Light rain': 'assets/weather-icons/rainy.png',
+    'Heavy rain': 'assets/weather-icons/rainy.png',
+    'Ice pellets': 'assets/weather-icons/snow.png',
     'Clear': 'assets/weather-icons/clear.png',
   };
 
@@ -387,10 +389,10 @@ class _MyHomePageState extends State<MyHomePage> {
     else if (9 <= hour && hour < 12) {
       _bgImage = 'Background1.jpg';
     }
-    else if (12 <= hour && hour < 18) {
+    else if (12 <= hour && hour < 17) {
       _bgImage = 'Background3.png';
     }
-    else if (18 <= hour && hour < 21) {
+    else if (17 <= hour && hour < 21) {
       _bgImage = 'Background4.jpeg';
     }
     else if (21 <= hour && hour < 24) {
@@ -449,7 +451,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                   ]
                 ),
-                const SizedBox(height: 0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
@@ -499,8 +500,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: <Widget> [
                     Image.asset(
                       _weatherIconPath,
-                      width: 120.0,
-                      height: 120.0,
+                      width: 140.0,
+                      height: 140.0,
                     ),
                   ]
                 ),
@@ -695,7 +696,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         _currentCity = cityAndState;
                         _currentWeather = locationsWeather;
                         _currentTemperature = temperature;
-                        _weatherIconPath = weatherIcons[locationsWeather] ?? 'assets/weather-icons/sunny.png';
+                        _weatherIconPath = weatherIcons[_currentWeather] ?? 'assets/weather-icons/sunny.png';
                         _recommendedClothing = _clothingRecommendations[_currentWeather]?[tempRange] ?? [];
                       });
                     } catch (e) {
