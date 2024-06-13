@@ -56,14 +56,20 @@ positioning, and sizing widgets. These are widgets that can contain multiple chi
  The row is the widget that can display various child widgets in a horizontal manner. 
  The column displays child widgets in a vertical manner
 ************************************************************************************************************ 
-Implementation Notes: 
+Things to add:  
 
-- When different location time changes based on their time zone. 
-- Add error handling
-- Weather Icon changing on the weather
 - ADD CONSTRAINTS TO CURRENT LOCATION AS IT WILL GO OFF SCREEN FOR LONG LOCATIONS
 - Finish read me page on github
 - Link back to weatherapi since I used the free version
+- Sourcing the images used for the weathers
+- if phone is rotated the whole interface bugs out, research how to fix that or 
+make it where app is only ever vertical
+- error handling when issues arrive 
+- some places do not have location name preferences like the U.S., so for 
+Cairo, Egpyt it will say Cairo, Cairo. 
+- There are still a lot of weather conditions not accounted for from WeatherAPI
+- Next to time maybe put AM or PM
+
 
 *************************************************************************************************************
 */ 
