@@ -13,11 +13,11 @@ Custom Widgets: Displays current weather, temperature, and clothing recommendati
 
 # Screenshots
 
-![Simulator Screenshot - iPhone 15 Pro Max - 2024-06-13 at 16 27 15](https://github.com/xp-squared/Weather-Wardrobe-App/assets/108478666/63425ecd-8f04-4c12-861c-90dd70a3860f)
+<img src="https://github.com/xp-squared/Weather-Wardrobe-App/assets/108478666/63425ecd-8f04-4c12-861c-90dd70a3860f" alt="Simulator Screenshot 1" width="300">
 
-![Simulator Screenshot - iPhone 15 Pro Max - 2024-06-13 at 20 48 23](https://github.com/xp-squared/Weather-Wardrobe-App/assets/108478666/eaceb5f1-3f45-4039-a6bd-0d9a1269e3a9)
+<img src="https://github.com/xp-squared/Weather-Wardrobe-App/assets/108478666/eaceb5f1-3f45-4039-a6bd-0d9a1269e3a9" alt="Simulator Screenshot 2" width="300">
 
-![Simulator Screenshot - iPhone 15 Pro Max - 2024-06-16 at 10 56 26](https://github.com/xp-squared/Weather-Wardrobe-App/assets/108478666/6f502531-2e43-437a-b8e6-e67258ca6fd9)
+<img src="https://github.com/xp-squared/Weather-Wardrobe-App/assets/108478666/6f502531-2e43-437a-b8e6-e67258ca6fd9" alt="Simulator Screenshot 3" width="300">
 
 # Usage
 Open the app and allow location access for accurate weather data.
