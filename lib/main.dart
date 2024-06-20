@@ -58,7 +58,7 @@ positioning, and sizing widgets. These are widgets that can contain multiple chi
 ************************************************************************************************************ 
 Things to add:  
 
-- ADD CONSTRAINTS TO CURRENT LOCATION AS IT WILL GO OFF SCREEN FOR LONG LOCATIONS
+- add constraints to current location and current weather, those both will go off screen
 - Finish read me page on github
 - Link back to weatherapi since I used the free version
 - Sourcing the images used for the weathers
@@ -69,6 +69,7 @@ make it where app is only ever vertical
 Cairo, Egpyt it will say Cairo, Cairo. 
 - There are still a lot of weather conditions not accounted for from WeatherAPI
 - Next to time maybe put AM or PM
+- Replace backgrounds 2 and 5 they do not fit so well
 
 
 *************************************************************************************************************
